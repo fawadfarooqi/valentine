@@ -1,106 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Will You Be My Valentine?</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #ffe6e6;
-      text-align: center;
-      padding-top: 80px;
-      overflow: hidden;
-    }
-
-    h1 {
-      color: #d6336c;
-    }
-
-    #meme {
-      margin-top: 20px;
-      font-size: 20px;
-      color: #444;
-      font-weight: bold;
-    }
-
-    button {
-      padding: 12px 24px;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      position: absolute;
-      transition: 0.2s;
-    }
-
-    #yesBtn {
-      background: #ff4d6d;
-      color: white;
-      left: 45%;
-      top: 55%;
-    }
-
-    #noBtn {
-      background: #6c757d;
-      color: white;
-      left: 55%;
-      top: 55%;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Chappal Technology 😎</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #fff0f5;
+  text-align: center;
+  padding-top: 80px;
+  overflow: hidden;
+}
+h1 { color: #333; }
+#comment { margin-top: 20px; font-size: 20px; font-weight: bold; }
+button {
+  padding: 12px 24px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  position: absolute;
+  transition: 0.2s;
+}
+#chappalBtn { background: #ff4d6d; color: white; left: 40%; top: 55%; }
+#noBtn { background: #6c757d; color: white; left: 55%; top: 55%; }
+#valentineYes, #valentineNo { display:none; }
+</style>
 </head>
 <body>
 
-  <h1>Qandeel 💖 Will you be my Valentine?</h1>
-  <div id="meme"></div>
+<h1>"Kya faida aisi technology jahan chappal bhi na lagay" 😌</h1>
+<div id="comment">😏 Chappal maar ke dikhao ya nahi?</div>
 
-  <button id="yesBtn" onclick="yesClicked()">YES 💘</button>
-  <button id="noBtn" onclick="noClicked()">NO 🙈</button>
+<!-- Phase 1 buttons -->
+<button id="chappalBtn">Chappal Marni Hai 👟</button>
+<button id="noBtn">No 🙈</button>
 
-  <script>
-    let noCount = 0;
-    const memeText = document.getElementById("meme");
-    const noBtn = document.getElementById("noBtn");
+<!-- Phase 2 Valentine buttons -->
+<button id="valentineYes">Yes 💖</button>
+<button id="valentineNo">No 🙈</button>
 
-    function yesClicked() {
-      memeText.innerHTML = `
-        🎉 <span style="color:#d6336c;">Congratulations Qandeel!</span> 💖<br><br>
-        You are officially my Valentine 😍<br><br>
-        <small>😅 But… please think again</small><br>
-        <strong>💸 I don’t have any money!</strong><br><br>
-        ❤️ Love is free though 😉
-      `;
+<div id="celebration" style="margin-top:30px;"></div>
 
-      document.getElementById("yesBtn").style.display = "none";
+<script>
+const comment = document.getElementById("comment");
+const chappalBtn = document.getElementById("chappalBtn");
+const noBtn = document.getElementById("noBtn");
+const valentineYes = document.getElementById("valentineYes");
+const valentineNo = document.getElementById("valentineNo");
+const celebration = document.getElementById("celebration");
+
+let chappalCount = 0;
+
+// Phase 1: Chappal dodging
+chappalBtn.onclick = () => {
+  chappalCount++;
+  const taunts = [
+    "😎 Aray Qandeel! Chappal miss ho gayi!",
+    "😂 Tez! Chappal se bach gayi!",
+    "🤣 Chappal bhi haar gayi!",
+    "😏 Lag rahi thi? Nahi! Chappal bach gayi!"
+  ];
+  comment.innerText = taunts[Math.floor(Math.random()*taunts.length)];
+  moveButton(chappalBtn);
+
+  if(chappalCount >= 5){
+    // remove chappal button, show only "No nahi marni"
+    chappalBtn.style.display = "none";
+    noBtn.innerText = "No nahi marni 🙈";
+    comment.innerText = "😏 Dekho, ab sirf yahi button hai";
+    
+    // clicking it triggers Valentine phase
+    noBtn.onclick = () => {
       noBtn.style.display = "none";
-    }
+      valentineYes.style.display = "inline-block";
+      valentineNo.style.display = "inline-block";
+      valentineYes.style.left = "45%";
+      valentineYes.style.top = "55%";
+      valentineNo.style.left = "55%";
+      valentineNo.style.top = "55%";
 
-    function noClicked() {
-      noCount++;
+      comment.innerText = ""; // clear previous comment
 
-      if (noCount === 1) {
-        memeText.innerText = "😏 Qandeel… are you sure?";
-        moveNo();
-      } 
-      else if (noCount === 2) {
-        memeText.innerText = "😂 Button bhi mana kar raha hai!";
-        moveNo();
-      } 
-      else if (noCount === 3) {
-        memeText.innerText = "😈 NO option cancelled!";
-        noBtn.innerText = "YES ONLY 😍";
-        noBtn.style.background = "#ff4d6d";
-        noBtn.onclick = yesClicked;
-      }
-    }
+      // Valentine YES click
+      valentineYes.onclick = () => {
+        celebration.innerHTML = `<img src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif" width="300"><br>
+        😅 Paisa nahi hai<br>❤️ Love is free`;
+        valentineYes.style.display="none";
+        valentineNo.style.display="none";
+      };
 
-    function moveNo() {
-      const x = Math.random() * (window.innerWidth - 120);
-      const y = Math.random() * (window.innerHeight - 80);
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
-    }
-  </script>
+      // Valentine NO click
+      valentineNo.onclick = () => {
+        const taunts = [
+          "😏 Arey Qandeel! No allowed nahi hai!",
+          "😂 Button se bach nahi sakti!",
+          "🤣 Jaldi Yes dabao!"
+        ];
+        comment.innerText = taunts[Math.floor(Math.random()*taunts.length)];
+        moveButton(valentineNo);
+      };
+    };
+  }
+};
 
+// Simple taunt if clicking No before chappal phase ends
+noBtn.onclick = () => {
+  const taunts = [
+    "😏 Dare ho Qandeel?",
+    "😂 Chappal maarne ka option try karo!",
+    "🤣 No se kuch nahi hoga!"
+  ];
+  comment.innerText = taunts[Math.floor(Math.random()*taunts.length)];
+  moveButton(noBtn);
+}
+
+// function to move button randomly
+function moveButton(btn){
+  const x = Math.random() * (window.innerWidth - 150);
+  const y = Math.random() * (window.innerHeight - 100);
+  btn.style.left = x + "px";
+  btn.style.top = y + "px";
+}
+</script>
 </body>
 </html>
